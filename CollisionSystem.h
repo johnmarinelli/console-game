@@ -11,6 +11,7 @@ private:
 	QuadTree mQuadTree;
 	const std::vector<Entity*>& mEntities;
 
+	//TODO: fix this 
 	bool checkCollision(const Entity& a, const Entity& b)
 	{
 	    int aLeft = a.mRect.mX;
@@ -32,15 +33,18 @@ private:
     	return true;
 	}
 
-	void getEntities()
+	void updateQuadTree()
 	{
+		for(auto i : mEntities){
+			mQuadTree.insert(i);
+		}
 	}
 
 	void collision()
 	{
 		std::vector<Entity*> v;
 
-        	for(int i = 0; i < mEntities.size(); i++){
+ 	      	for(int i = 0; i < mEntities.size(); i++){
         	        v.clear();
         	        mQuadTree.getObjects(v, mEntities[i]->mRect);
 	
@@ -62,7 +66,7 @@ public:
 
 	void update()
 	{
-		getEntities();
+		updateQuadTree();
 		collision();
 	}	
 

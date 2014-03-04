@@ -115,7 +115,6 @@ public:
 		}
 	}	
 
-
 	void insert(Entity* obj)
 	{
 		Rectangle rect = obj->mRect;

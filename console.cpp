@@ -49,12 +49,15 @@ int main()
 	std::cout << CLEAR_SCREEN;	
 	char input = ' ';
 
-	QuadTree qt(0, Rectangle(0, 0, WIDTH, HEIGHT));
 	EntityManager em;
 	CollisionSystem cs(em);
 
-	qt.insert(&player);
+	Player quayer;
+	quayer.mGFX = 'q';
+	quayer.setRect(2,2,1,1);
+
 	em.add(&player);
+	em.add(&quayer);
 
 	drawMap();
 	drawGUIBorder();
@@ -63,8 +66,6 @@ int main()
 
 	moveToInputArea();
 
-	qt.display();
-
 	//TODO: implement an attack system
 	while(input != 'q'){
 		std::cin >> input;
@@ -72,7 +73,6 @@ int main()
 
 		player.handleInput(input);
 
-//		collision(qt, em);
 		cs.update();
 
 		drawMap();

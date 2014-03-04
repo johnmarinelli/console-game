@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 
+#include "CollisionSystem.h"
 #include "QuadTree.h"
 #include "EntityManager.h"
 #include "Player.h"
@@ -43,24 +44,6 @@ void drawGUI()
 	printf("\033[%d;%df", 3, borderXMargin); printf("collision: %d", iscollision);
 }
 
-void collision(QuadTree& qt, EntityManager& em)
-{
-	std::vector<Entity*> v;	
-
-	for(int i = 0; i < em.size(); i++){
-		v.clear();
-		qt.getObjects(v, em[i]->mRect);
-
-		for(int j = 0; j < v.size(); j++){
-			if(v[j] != em[i]){
-				if(checkCollision(*em[i], *v[j])){
-					iscollision++;
-				}
-			}
-		}
-	}
-}
-
 int main()
 {
 	std::cout << CLEAR_SCREEN;	
@@ -68,6 +51,7 @@ int main()
 
 	QuadTree qt(0, Rectangle(0, 0, WIDTH, HEIGHT));
 	EntityManager em;
+	CollisionSystem cs(em);
 
 	qt.insert(&player);
 	em.add(&player);
@@ -75,9 +59,10 @@ int main()
 	drawMap();
 	drawGUIBorder();
 	drawGUI();
+	em.paint();
+
 	moveToInputArea();
 
-	//em.paint();
 	qt.display();
 
 	//TODO: implement an attack system
@@ -87,7 +72,8 @@ int main()
 
 		player.handleInput(input);
 
-		collision(qt, em);
+//		collision(qt, em);
+		cs.update();
 
 		drawMap();
 		em.paint();

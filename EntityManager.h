@@ -8,6 +8,7 @@ class EntityManager
 {
 private:
 	std::vector<Entity*> mEntities;
+	friend class CollisionSystem;
 	
 public:
 	EntityManager() 

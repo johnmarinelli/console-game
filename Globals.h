@@ -20,26 +20,4 @@ const void moveToInputArea()
 {
 	moveTo(0, HEIGHT + 4);
 }
-
-bool checkCollision(const Entity& a, const Entity& b)
-{
-	int aLeft = a.mRect.mX;
-	int aTop = a.mRect.mY;
-	int aRight = aLeft + a.mRect.mWidth;
-	int aBottom = aTop + a.mRect.mHeight;
-
-	int bLeft = b.mRect.mX;
-	int bTop = b.mRect.mY;
-	int bRight = bLeft + b.mRect.mWidth;
-	int bBottom = bTop + b.mRect.mHeight;
-
-
-	if (aLeft >= bRight) return false;
-	if (aRight <= bLeft) return false;
-	if (aBottom <= bTop) return false;
-	if (aTop >= bBottom) return false;
-	
-	return true; 
-}
-
 #endif

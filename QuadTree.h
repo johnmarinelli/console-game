@@ -21,7 +21,9 @@ private:
 	const int MAX_LEVELS = 3; 	//deepest level subnode
 
 	int mLevel;			//current node level
+
 	std::vector<Entity*> mObjects;  //objects in this quadtree
+
 	const Rectangle mBounds;	//2D space this node occupies
 	std::vector<QuadTree*> mNodes;  //subnodes
 	

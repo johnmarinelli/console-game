@@ -11,7 +11,6 @@ private:
 	QuadTree mQuadTree;
 	const std::vector<Entity*>& mEntities;
 
-	//TODO: fix this 
 	bool checkCollision(const Entity& a, const Entity& b)
 	{
 	    int aLeft = a.mRect.mX;
@@ -23,12 +22,17 @@ private:
 	    int bTop = b.mRect.mY;
 	    int bRight = bLeft + b.mRect.mWidth;
 	    int bBottom = bTop + b.mRect.mHeight;
-
-
+/*
+	    if (aLeft >= bRight + 1) return false;
+	    if (aRight <= bLeft - 1) return false;
+	    if (aBottom <= bTop - 1) return false;
+	    if (aTop >= bBottom + 1) return false;
+*/
 	    if (aLeft >= bRight) return false;
 	    if (aRight <= bLeft) return false;
 	    if (aBottom <= bTop) return false;
 	    if (aTop >= bBottom) return false;
+
 
     	return true;
 	}
@@ -40,7 +44,7 @@ private:
 		}
 	}
 
-	void collision()
+	void collision(int& coll)
 	{
 		std::vector<Entity*> v;
 
@@ -51,7 +55,8 @@ private:
 	                for(int j = 0; j < v.size(); j++){
         	                if(v[j] != mEntities[i]){
         	                        if(checkCollision(*mEntities[i], *v[j])){
-        	                                printf("Is collision");
+										(*mEntities[i]).handleCollision(*v[j]);
+										coll++;
         	                        }
         	                }
         	        }
@@ -64,10 +69,10 @@ public:
 	{
 	}
 
-	void update()
+	void update(int& coll)
 	{
 		updateQuadTree();
-		collision();
+		collision(coll);
 	}	
 
 };

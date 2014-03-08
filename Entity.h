@@ -3,14 +3,27 @@
 
 #include "Rectangle.h"
 
+enum EntityType 
+{
+	NONE,
+	PLAYER,
+	WALL,
+};
+
 class Entity
 {
 private:
 public:
+	EntityType mType;
 	Rectangle mRect;
-	Entity() : mRect() {};
+	Entity() : mType(NONE), mRect() {};
 
 	virtual void paint() = 0;
+
+	void setType(EntityType type)
+	{
+		mType = type;
+	}
 
 	void setRect(const int x, const int y, const int width, const int height)
 	{
@@ -18,6 +31,10 @@ public:
 		mRect.mY = y;	
 		mRect.mWidth = width;	
 		mRect.mHeight = height;
+	}
+
+	virtual void handleCollision(const Entity& e)
+	{
 	}
 };
 

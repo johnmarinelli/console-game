@@ -6,6 +6,7 @@
 #include "QuadTree.h"
 #include "EntityManager.h"
 #include "Player.h"
+#include "Wall.h"
 
 int iscollision = 0;
 
@@ -52,12 +53,16 @@ int main()
 	EntityManager em;
 	CollisionSystem cs(em);
 
+	Wall wall;
+	wall.setRect(5,5,1,1);
+
 	Player quayer;
 	quayer.mGFX = 'q';
 	quayer.setRect(2,2,1,1);
 
 	em.add(&player);
 	em.add(&quayer);
+	em.add(&wall);
 
 	drawMap();
 	drawGUIBorder();
@@ -73,7 +78,7 @@ int main()
 
 		player.handleInput(input);
 
-		cs.update();
+		cs.update(iscollision);
 
 		drawMap();
 		em.paint();

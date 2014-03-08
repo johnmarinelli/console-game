@@ -20,4 +20,5 @@ const void moveToInputArea()
 {
 	moveTo(0, HEIGHT + 4);
 }
+
 #endif

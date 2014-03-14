@@ -8,12 +8,15 @@ enum EntityType
 	NONE,
 	PLAYER,
 	WALL,
+	ENEMY,
 };
 
 class Entity
 {
 private:
 public:
+	char mGFX;
+
 	EntityType mType;
 	Rectangle mRect;
 	Entity() : mType(NONE), mRect() {};

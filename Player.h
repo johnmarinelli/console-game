@@ -3,20 +3,23 @@
 
 #include "Entity.h"
 #include "Globals.h"
+#include "Statistics.h"
 
 class Player : public Entity
 {
 private:
+	Statistics mStatistics;
 
 	enum LastMove{ NONE, UP, DOWN, LEFT, RIGHT } mLastMove;
 
 	void moveBack()
 	{
 		switch(mLastMove){
-			case UP: mRect.mY++;
-			case DOWN: mRect.mY--;
-			case LEFT: mRect.mX++;
-			case RIGHT: mRect.mX--;
+			case UP: mRect.mY++; break;
+			case DOWN: mRect.mY--; break;
+			case LEFT: mRect.mX++; break;
+			case RIGHT: mRect.mX--; break;
+			default: break;
 		}	
 	}
 
@@ -78,12 +81,21 @@ public:
 		if(e.mType == WALL){
 			moveBack();
 		}
+		
+		else if(e.mType == ENEMY){
+			attack(e);
+		}
 	}
 
 	void paint()	
 	{
 		moveTo(mRect.mX, mRect.mY);
 		printf("%c", mGFX);
+	}
+
+	void attack(const Entity& e)
+	{
+		
 	}
 } player;
 

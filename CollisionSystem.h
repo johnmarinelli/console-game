@@ -55,17 +55,13 @@ private:
 	                for(int j = 0; j < v.size(); j++){
         	                if(v[j] != mEntities[i]){
         	                        if(checkCollision(*mEntities[i], *v[j])){
-										debugAnchor();
 										(*mEntities[i]).handleCollision(*v[j]);
-										debugAnchor();
 										coll++;
         	                        }
         	                }
         	        }
         	}
 	}
-
-	void debugAnchor(){}
 
 public:
 

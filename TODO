@@ -1,0 +1,5 @@
+3/13/14
+
+TODO: put mGFX in Entity class
+TODO: implement inventory
+TODO: add receiveDamage(int damage) functions to player and entity

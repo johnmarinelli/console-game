@@ -3,12 +3,18 @@
 
 #include "Entity.h"
 #include <vector>
+#include <algorithm>
 
 class EntityManager
 {
 private:
 	std::vector<Entity*> mEntities;
 	friend class CollisionSystem;
+
+	void remove(int index)
+	{
+		mEntities.erase(mEntities.begin() + index);
+	}
 	
 public:
 	EntityManager() 
@@ -23,6 +29,13 @@ public:
 	void add(Entity* e)
 	{
 		mEntities.push_back(e);
+	}
+
+	void update()
+	{
+		mEntities.erase(std::remove_if(mEntities.begin(),
+									   mEntities.end(),
+									   [](Entity* e){ return !(e->isActive()); }), mEntities.end());	
 	}
 
 	void paint()

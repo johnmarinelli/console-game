@@ -76,7 +76,7 @@ public:
 		}
 	}
 
-	void handleCollision(const Entity& e)
+	void handleCollision(Entity& e)
 	{
 		if(e.mType == WALL){
 			moveBack();
@@ -84,6 +84,7 @@ public:
 		
 		else if(e.mType == ENEMY){
 			attack(e);
+			moveBack();
 		}
 	}
 
@@ -93,10 +94,16 @@ public:
 		printf("%c", mGFX);
 	}
 
-	void attack(const Entity& e)
+	void attack(Entity& e)
 	{
-		
+		e.receiveMessage(MESSAGETYPE_ATTACK, *this);
 	}
+	
+	bool isActive()
+	{
+		return true;
+	}
+
 } player;
 
 #endif

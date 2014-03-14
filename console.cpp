@@ -7,6 +7,7 @@
 #include "EntityManager.h"
 #include "Player.h"
 #include "Wall.h"
+#include "Enemy.h"
 
 int iscollision = 0;
 
@@ -56,13 +57,11 @@ int main()
 	Wall wall;
 	wall.setRect(5,5,1,1);
 
-	Player quayer;
-	quayer.mGFX = 'q';
-	quayer.setRect(2,2,1,1);
-
+	Enemy enemy;
+	
 	em.add(&player);
-	em.add(&quayer);
 	em.add(&wall);
+	em.add(&enemy);
 
 	drawMap();
 	drawGUIBorder();
@@ -79,6 +78,7 @@ int main()
 		player.handleInput(input);
 
 		cs.update(iscollision);
+		em.update();
 
 		drawMap();
 		em.paint();

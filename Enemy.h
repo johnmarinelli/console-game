@@ -21,11 +21,11 @@ public:
 
 	Enemy(Rectangle rect, char level) : mGFX(level)
 	{
+		setRect(rect.mX, rect.mY, rect.mWidth, rect.mHeight);
 		setType(ENEMY);
-		setRect(rect);
 	}
 
-	void handleCollision(const Entity& e)
+	void handleCollision(Entity& e)
 	{
 	}
 	
@@ -35,8 +35,23 @@ public:
 		printf("%c", mGFX);
 	}
 
-	void attack(const Entity& e)
+	void attack(Entity& e)
 	{	
+	}
+		
+	void receiveMessage(MessageType type, Entity& e)
+	{
+		switch(type)
+		{
+			case MESSAGETYPE_ATTACK: mStatistics.Health -= 1; 
+				break;
+			default: break;
+		}
+	}
+
+	bool isActive()
+	{
+		return (mStatistics.Health > 0);
 	}
 };
 

@@ -11,6 +11,12 @@ enum EntityType
 	ENEMY,
 };
 
+enum MessageType
+{
+	MESSAGETYPE_NONE,
+	MESSAGETYPE_ATTACK,
+};
+
 class Entity
 {
 private:
@@ -36,8 +42,17 @@ public:
 		mRect.mHeight = height;
 	}
 
-	virtual void handleCollision(const Entity& e)
+	virtual void handleCollision(Entity& e)
 	{
+	}
+
+	virtual void receiveMessage(MessageType type, Entity& e)
+	{
+	}
+
+	virtual bool isActive()
+	{
+		return false;
 	}
 };
 

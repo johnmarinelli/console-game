@@ -10,6 +10,10 @@ struct Statistics
 
 	int Health;
 	int Damage;
+
+	Statistics() : Health(1), Damage(1)
+	{
+	}
 };
 
 #endif

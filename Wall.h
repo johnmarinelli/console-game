@@ -25,6 +25,11 @@ public:
         moveTo(mRect.mX, mRect.mY);
         printf("%c", mGFX);
 	}
+
+	bool isActive()
+	{
+		return true;
+	}
 };
 
 #endif

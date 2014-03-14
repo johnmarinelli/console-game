@@ -22,12 +22,7 @@ private:
 	    int bTop = b.mRect.mY;
 	    int bRight = bLeft + b.mRect.mWidth;
 	    int bBottom = bTop + b.mRect.mHeight;
-/*
-	    if (aLeft >= bRight + 1) return false;
-	    if (aRight <= bLeft - 1) return false;
-	    if (aBottom <= bTop - 1) return false;
-	    if (aTop >= bBottom + 1) return false;
-*/
+
 	    if (aLeft >= bRight) return false;
 	    if (aRight <= bLeft) return false;
 	    if (aBottom <= bTop) return false;
@@ -39,6 +34,8 @@ private:
 
 	void updateQuadTree()
 	{
+		mQuadTree.clear();
+
 		for(auto i : mEntities){
 			mQuadTree.insert(i);
 		}
@@ -56,12 +53,14 @@ private:
         	                if(v[j] != mEntities[i]){
         	                        if(checkCollision(*mEntities[i], *v[j])){
 										(*mEntities[i]).handleCollision(*v[j]);
-										coll++;
+										coll++;debug();
         	                        }
         	                }
         	        }
         	}
 	}
+
+	void debug(){}
 
 public:
 

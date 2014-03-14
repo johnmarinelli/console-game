@@ -3,3 +3,9 @@
 TODO: put mGFX in Entity class
 TODO: implement inventory
 TODO: add receiveDamage(int damage) functions to player and entity
+
+3/14/14
+
+TODO: make Entity ctors
+TODO: implement inventory
+TODO: how to let receiveMessage know about Entitys' statistics?

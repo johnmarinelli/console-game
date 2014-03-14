@@ -3,7 +3,6 @@
 
 #include "Entity.h"
 #include "Globals.h"
-#include "Statistics.h"
 
 class Player : public Entity
 {
@@ -96,7 +95,7 @@ public:
 
 	void attack(Entity& e)
 	{
-		e.receiveMessage(MESSAGETYPE_ATTACK, *this);
+		e.receiveMessage(MESSAGETYPE_ATTACK, mStatistics);
 	}
 	
 	bool isActive()

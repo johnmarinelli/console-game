@@ -2,6 +2,7 @@
 #define ENTITY_H
 
 #include "Rectangle.h"
+#include "Statistics.h"
 
 enum EntityType 
 {
@@ -46,8 +47,20 @@ public:
 	{
 	}
 
+	/*
+	* params: type, entity
+	* messagetypes: 
+	*/
 	virtual void receiveMessage(MessageType type, Entity& e)
 	{
+	}
+
+	/*
+	* params: type, statistics
+	* messagetypes: ATTACK,
+	*/
+	virtual void receiveMessage(MessageType type, Statistics stats)
+	{	
 	}
 
 	virtual bool isActive()

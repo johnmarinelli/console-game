@@ -70,7 +70,6 @@ int main()
 
 	moveToInputArea();
 
-	//TODO: implement an attack system
 	while(input != 'q'){
 		std::cin >> input;
 		std::cout << CLEAR_LINE;

@@ -9,3 +9,4 @@ TODO: add receiveDamage(int damage) functions to player and entity
 TODO: make Entity ctors
 TODO: implement inventory
 TODO: how to let receiveMessage know about Entitys' statistics?
+		-- overload receiveMessage to accept an Entity in one and Statistics in the other

@@ -3,7 +3,6 @@
 
 #include "Entity.h"
 #include "Globals.h"
-#include "Statistics.h"
 
 class Enemy : public Entity
 {
@@ -38,15 +37,15 @@ public:
 	void attack(Entity& e)
 	{	
 	}
-		
-	void receiveMessage(MessageType type, Entity& e)
+
+	void receiveMessage(MessageType type, Statistics stats)
 	{
 		switch(type)
-		{
-			case MESSAGETYPE_ATTACK: mStatistics.Health -= 1; 
-				break;
-			default: break;
-		}
+        {
+            case MESSAGETYPE_ATTACK: mStatistics.Health -= stats.Damage;
+                break;
+            default: break;
+        }
 	}
 
 	bool isActive()

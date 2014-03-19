@@ -51,7 +51,7 @@ public:
 	* params: type, entity
 	* messagetypes: 
 	*/
-	virtual void receiveMessage(MessageType type, Entity& e)
+	virtual void receiveMessage(MessageType type, Entity& sender)
 	{
 	}
 
@@ -59,13 +59,21 @@ public:
 	* params: type, statistics
 	* messagetypes: ATTACK,
 	*/
-	virtual void receiveMessage(MessageType type, Statistics stats)
+	virtual void receiveMessage(MessageType type, const Statistics& stats)
+	{	
+	}
+
+	virtual void update()
 	{	
 	}
 
 	virtual bool isActive()
 	{
 		return false;
+	}
+
+	virtual const Statistics& getStatistics()
+	{
 	}
 };
 

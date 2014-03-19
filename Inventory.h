@@ -3,6 +3,11 @@
 
 struct Inventory
 {
+	int Money;
+
+	Inventory() : Money(0)
+	{
+	}	
 };
 
 #endif

@@ -28,7 +28,6 @@ private:
 	    if (aBottom <= bTop) return false;
 	    if (aTop >= bBottom) return false;
 
-
     	return true;
 	}
 
@@ -53,14 +52,12 @@ private:
         	                if(v[j] != mEntities[i]){
         	                        if(checkCollision(*mEntities[i], *v[j])){
 										(*mEntities[i]).handleCollision(*v[j]);
-										coll++;debug();
+										coll++;
         	                        }
         	                }
         	        }
         	}
 	}
-
-	void debug(){}
 
 public:
 

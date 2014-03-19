@@ -3,13 +3,15 @@
 
 #include "Entity.h"
 #include "Globals.h"
+#include "LastMove.h"
+
+#include <sstream>
 
 class Player : public Entity
 {
 private:
 	Statistics mStatistics;
-
-	enum LastMove{ NONE, UP, DOWN, LEFT, RIGHT } mLastMove;
+	LastMove mLastMove;
 
 	void moveBack()
 	{
@@ -57,10 +59,11 @@ private:
 public:
 	char mGFX;
 
-	Player() : mGFX('p')
+	Player() : mGFX('p'), mLastMove(LASTMOVE_NONE)
 	{
 		setType(PLAYER);
 		setRect(1,1,1,1);
+		mStatistics.Health = 10;
 	}
 
 	void handleInput(char input)
@@ -95,12 +98,32 @@ public:
 
 	void attack(Entity& e)
 	{
-		e.receiveMessage(MESSAGETYPE_ATTACK, mStatistics);
+		e.receiveMessage(MESSAGETYPE_ATTACK, *this);
+
+		std::stringstream ss;
+		ss << "Player attacks " << e.mGFX << " for " << mStatistics.Damage;
+		globalOutputs.push(ss.str());
+	}
+
+	void receiveMessage(MessageType type, const Statistics& stats)
+	{
+		switch(type)
+		{	
+			case MESSAGETYPE_ATTACK: mStatistics.Health -= stats.Damage;
+				break;
+			default:
+				break;
+		}	
 	}
 	
 	bool isActive()
 	{
 		return true;
+	}
+
+	const Statistics& getStatistics()
+	{
+		return mStatistics;
 	}
 
 } player;

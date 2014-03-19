@@ -42,8 +42,19 @@ void drawGUI()
 	std::cout << MOVE_TO_0_0;
 
 	printf("\033[%d;%df", 1, borderXMargin); printf("INVENTORY");
-	printf("\033[%d;%df", 2, borderXMargin); printf("SWAG");
 	printf("\033[%d;%df", 3, borderXMargin); printf("collision: %d", iscollision);
+}
+
+void writeOutput()
+{
+	std::cout << MOVE_TO_0_0;
+
+	moveTo(0, HEIGHT + 1);
+
+	while(!globalOutputs.empty()){
+		std::cout << globalOutputs.front() << std::endl;
+		globalOutputs.pop();
+	}	
 }
 
 int main()
@@ -83,6 +94,7 @@ int main()
 		em.paint();
 		drawGUIBorder();	
 		drawGUI();
+		writeOutput();
 
 		moveToInputArea();
 	}

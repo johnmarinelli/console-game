@@ -3,6 +3,10 @@
 
 #include "Inventory.h"
 
+/*
+*  This holds extra information about an entity
+*/
+
 struct Statistics
 {
 	//Inventory will hold the loot that entity holds
@@ -11,7 +15,9 @@ struct Statistics
 	int Health;
 	int Damage;
 
-	Statistics() : Health(1), Damage(1)
+	unsigned int Experience;
+
+	Statistics() : Health(4), Damage(1), Experience(0)
 	{
 	}
 };

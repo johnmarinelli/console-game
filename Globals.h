@@ -1,7 +1,9 @@
 #ifndef GLOBALS_H
 #define GLOBALS_H
 
+#include <stdio.h>
 #include <queue>
+#include <iostream>
 #include <string>
 
 const int WIDTH = 50;
@@ -16,6 +18,11 @@ std::queue<std::string> globalOutputs;
 const void moveTo(int x, int y)
 {
 	std::cout << MOVE_TO_0_0;
+	printf("\033[%d;%df", y, x);
+}
+
+const void pushCursor(int x = 0, int y = 0)
+{
 	printf("\033[%d;%df", y, x);
 }
 

@@ -18,20 +18,6 @@ const char FLOOR_CHAR = '.';
 
 struct Room
 {
-private:
-	void drawRect(const Rectangle& rect, const char gfx)
-	{
-		int i = 0, j = 0;
-
-		for(i = 0; i < rect.mHeight; ++i){
-            moveTo(rect.mX, rect.mY + i);
-            for(j = 0; j < rect.mWidth; ++j){
-                printf("%c", gfx);
-            }
-        }
-	}
-
-public:
 	Rectangle mRect;
 	bool mIsConnected;
 	
@@ -56,7 +42,7 @@ public:
 		mWalls.push_back(Rectangle(x, y, 1, height));
 	}
 
-	void draw()
+	virtual void draw()
 	{
 		std::cout << MOVE_TO_0_0;
 		int i = 0, j = 0;

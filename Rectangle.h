@@ -16,4 +16,17 @@ public:
 	}
 };
 
+void drawRect(const Rectangle& rect, const char gfx)
+{
+   int i = 0, j = 0;
+
+    for(i = 0; i < rect.mHeight; ++i){
+       moveTo(rect.mX, rect.mY + i);
+       for(j = 0; j < rect.mWidth; ++j){
+           printf("%c", gfx);
+       }
+    }
+}
+
+
 #endif

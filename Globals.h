@@ -21,11 +21,6 @@ const void moveTo(int x, int y)
 	printf("\033[%d;%df", y, x);
 }
 
-const void pushCursor(int x = 0, int y = 0)
-{
-	printf("\033[%d;%df", y, x);
-}
-
 const void moveToInputArea()
 {
 	moveTo(0, HEIGHT + 4);

@@ -1,4 +1,5 @@
 #include "../Globals.h"
+#include "Utilities.h"
 #include "Room.h"
 
 #include <vector>
@@ -21,6 +22,10 @@ void drawMap()
 	for(auto& room : rooms){
 		room.draw();	
 	}
+
+	/*
+	*	for hall in hallways; hall.draw()
+	*/
 }
 
 int main(int argc, char* args[])

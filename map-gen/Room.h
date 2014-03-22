@@ -58,6 +58,19 @@ struct Room
 		}
 	}
 
+	Room connect(const Room& r)
+	{
+		int connectX = r.mRect.mX;
+		int connectY = r.mRect.mY;
+
+		int dx = connectX - r.mRect.mX;
+		int dy = connectY - r.mRect.mY;
+		
+		//TODO: createHallway()
+		Room room(mRect.mX, mRect.mY, dx, dy);
+		return room;
+	}
+
 	template <typename T>
 	Vector2D<T> getRandomWall();
 };

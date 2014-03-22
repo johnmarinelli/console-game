@@ -9,10 +9,18 @@ const int GRID_HEIGHT = 2;
 
 std::vector<Rectangle> grid;
 std::vector<Room> rooms;
+std::vector<Room> hallways;
 
 void connectRooms()
 {
-	
+	for(auto& room : rooms)
+	{
+		Rectangle original = room.mRect;
+		Room& neighbor = findNearestNeighbor(room, rooms);
+		room.mRect = original;
+
+		hallways.push_back(room.connect(neighbor));
+	}
 }
 
 void drawMap()
@@ -21,6 +29,10 @@ void drawMap()
 
 	for(auto& room : rooms){
 		room.draw();	
+	}
+		
+	for(auto& hall : hallways){
+		hall.draw();
 	}
 
 	/*
@@ -42,9 +54,11 @@ int main(int argc, char* args[])
 		rooms.push_back(createRandomRoom(grid[i]));
 	}
 	
-	std::cout << "cell width: " << cellwidth << std::endl;
+//	std::cout << "cell width: " << cellwidth << std::endl;
 
-	std::cout << "cell height: " << cellheight << std::endl;
+//	std::cout << "cell height: " << cellheight << std::endl;
+
+	connectRooms();
 
 	drawMap();
 	

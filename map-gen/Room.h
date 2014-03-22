@@ -7,6 +7,9 @@
 #include <vector>
 #include <random>
 
+/*Forward dec*/
+struct Hallway;
+
 const int MAX_ROOMS = 4;
 
 const int MIN_ROOM_DIMENSION = 3;
@@ -45,8 +48,7 @@ struct Room
 	virtual void draw()
 	{
 		std::cout << MOVE_TO_0_0;
-		int i = 0, j = 0;
-		
+	
 		//draw floor
 		drawRect(mRect, FLOOR_CHAR);
 
@@ -63,12 +65,12 @@ struct Room
 		int connectX = r.mRect.mX;
 		int connectY = r.mRect.mY;
 
-		int dx = connectX - r.mRect.mX;
-		int dy = connectY - r.mRect.mY;
+		int dx = connectX - mRect.mX;
+		int dy = connectY - mRect.mY;
 		
 		//TODO: createHallway()
-		Room room(mRect.mX, mRect.mY, dx, dy);
-		return room;
+		Room hall(mRect.mX, mRect.mY, dx, dy);
+		return hall;
 	}
 
 	template <typename T>

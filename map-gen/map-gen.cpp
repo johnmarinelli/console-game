@@ -1,6 +1,7 @@
 #include "../Globals.h"
 #include "Utilities.h"
 #include "Room.h"
+#include "Hallway.h"
 
 #include <vector>
 
@@ -9,7 +10,7 @@ const int GRID_HEIGHT = 2;
 
 std::vector<Rectangle> grid;
 std::vector<Room> rooms;
-std::vector<Room> hallways;
+std::vector<Hallway> hallways;
 
 void connectRooms()
 {
@@ -19,25 +20,21 @@ void connectRooms()
 		Room& neighbor = findNearestNeighbor(room, rooms);
 		room.mRect = original;
 
-		hallways.push_back(room.connect(neighbor));
+		hallways.push_back(static_cast<Hallway>(room.connect(neighbor)));
 	}
 }
 
 void drawMap()
 {
 	std::cout << CLEAR_SCREEN;
-
-	for(auto& room : rooms){
-		room.draw();	
-	}
-		
+	
 	for(auto& hall : hallways){
 		hall.draw();
 	}
-
-	/*
-	*	for hall in hallways; hall.draw()
-	*/
+	for(auto& room : rooms){
+		room.draw();	
+	}
+	
 }
 
 int main(int argc, char* args[])
@@ -64,5 +61,7 @@ int main(int argc, char* args[])
 	
 	char c;
 	std::cin >> c;
+
+	std::cout << CLEAR_SCREEN;
 	return 0;
 }

@@ -11,6 +11,17 @@ const char HALLWAY_CHAR = '-';
 
 struct Hallway : public Room
 {
+private:
+    void destroySideWalls()
+    {
+		//look in Room ctor to see which order walls are constructed
+		//right wall
+        mWalls.erase(mWalls.begin() + 1);
+		//left wall
+        mWalls.erase(mWalls.begin() + 3);
+    }
+
+public:
 	Hallway() : Room()
 	{
 	}
@@ -21,13 +32,7 @@ struct Hallway : public Room
 
 	Hallway(int x, int y, int width, int height) : Room(x, y, width, height)
 	{
-	}
-
-	void draw()
-	{
-		std::cout << MOVE_TO_0_0;
-
-		drawRect(mRect, HALLWAY_CHAR);
+		destroySideWalls();
 	}
 };
 

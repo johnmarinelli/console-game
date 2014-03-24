@@ -7,6 +7,8 @@
 
 #include <vector>
 
+#include <fstream>
+
 const int GRID_WIDTH = 2;
 const int GRID_HEIGHT = 1;
 class Map
@@ -26,18 +28,12 @@ private:
 	    }
 	}
 
-	void initGFX()
-	{
-		//int mapwidth = mRooms[3].mRect.mX + mRooms.mRect.mWidth;
-	}
-
 public:
 	Map()
 	{
 		int cellwidth = WIDTH / GRID_WIDTH;
 		int cellheight = HEIGHT / GRID_HEIGHT;
 
-		std::cout << cellwidth << " " << cellheight;
 		//create grid
 	    mGrid.push_back(Rectangle(1, 1, cellwidth, cellheight));
 	    mGrid.push_back(Rectangle(cellwidth, 1, cellwidth, cellheight));
@@ -53,23 +49,33 @@ public:
     	connectRooms();
 	}	
 
-	void draw()
+	void draw() 
 	{
-		std::cout << CLEAR_SCREEN;
-	
-/*		for(auto& room : mRooms){
-   		    room.draw();
-   		}
+		for(auto& room: mRooms){ room.drawGFX(); }
+		for(auto& hall : mHallways){ hall.drawGFX(); }
+	}
 
-  		for(auto& hall : mHallways){
-   	    	hall.draw();
-   		}*/
-		
-		//mRooms[0].drawgfx();
-		//mRooms[0].draw();
+	void toFile(std::ofstream& outfile)
+	{
+		for(auto& room : mRooms){
+			outfile << "Room\n";
+			outfile << "{\n";
+			outfile << "x: " << room.mRect.mX << "\n";
+			outfile << "y: " << room.mRect.mY << "\n";
+			outfile << "width: " << room.mRect.mWidth << "\n";
+			outfile << "height: " << room.mRect.mHeight << "\n";
+			outfile << "}\n\n";
+		}
 
-		for(auto& room: mRooms){ room.drawgfx(); }
-		for(auto& hall : mHallways){ hall.drawgfx(); }
+		for(auto& hall : mHallways){
+			outfile << "Hall\n";
+			outfile << "{\n";
+			outfile << "x: " << hall.mRect.mX << "\n";
+			outfile << "y: " << hall.mRect.mY << "\n";
+			outfile << "width: " << hall.mRect.mWidth << "\n";
+			outfile << "height: " << hall.mRect.mHeight << "\n";
+			outfile << "}\n\n";
+		}
 	}
 };
 

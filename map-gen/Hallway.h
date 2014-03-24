@@ -15,24 +15,41 @@ private:
     void destroySideWalls()
     {
 		//look in Room ctor to see which order walls are constructed
+
 		//right wall
         mWalls.erase(mWalls.begin() + 1);
 		//left wall
         mWalls.erase(mWalls.begin() + 3);
+
+		//remove walls from GFX
+		for(int row = 0; row < mGFXHeight; ++row){
+			for(int col = 0; col < mGFXWidth; ++col){
+				if((col == 0 && row > 0 && row < mGFXHeight - 1)
+					|| (col == mGFXWidth - 1 && row > 0 && row < mGFXHeight - 1)){
+					setGFX(FLOOR_CHAR, row, col);
+				}
+			}	
+		}
     }
 
 public:
 	Hallway() : Room()
 	{
+		destroySideWalls();
 	}
 	
 	Hallway(const Room& room) : Room(room)
 	{
+		destroySideWalls();
 	}
 
 	Hallway(int x, int y, int width, int height) : Room(x, y, width, height)
 	{
 		destroySideWalls();
+	}
+
+	~Hallway()
+	{
 	}
 };
 

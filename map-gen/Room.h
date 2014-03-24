@@ -23,13 +23,11 @@ int indexAt(int x, int y, int width)
 	return (x * width) + y;
 }
 
-/*WALLS ARE EXTENDED HORIZONTALLY*/
 struct Room
 {
 private:
 	char **mGFX;
-	int mGFXHeight, mGFXWidth;
-		
+	
 	void initGFX()
 	{
 		int gfxHeight = mRect.mHeight + 1;
@@ -59,18 +57,36 @@ private:
 public:
 	Rectangle mRect;
 	bool mIsConnected;
-
+	int mGFXHeight, mGFXWidth;
+	
 	std::vector<Rectangle> mWalls;
 
-	Room() : mRect(), mIsConnected(false)
+	Room() : mRect(), mIsConnected(false), mGFXHeight(0), mGFXWidth(0)
 	{
+	}
+	
+	Room(const Room& c) : mRect(c.mRect), mIsConnected(c.mIsConnected), mGFXHeight(c.mGFXHeight), mGFXWidth(c.mGFXWidth), mWalls(c.mWalls)
+	{	
+		//+1 because onscreen is index 1 
+		mGFX = new char*[mGFXHeight];
+	
+		//+1 because onscreen is index 1
+		for(int i = 0; i < mGFXHeight; ++i){
+			mGFX[i] = new char[mGFXWidth];
+		}
+
+		for(int row = 0; row < mGFXHeight; ++row){
+			for(int col = 0; col < mGFXWidth; ++col){
+				mGFX[row][col] = c.mGFX[row][col];
+			}
+		}
 	}
 
 	/*
 	* right wall will be the last column of the width
 	* bottom wall will be the last row of the height
 	*/
-	Room(int x, int y, int width, int height) : mRect(x, y, width, height), mIsConnected(false)
+	Room(int x, int y, int width, int height) : mRect(x, y, width, height), mIsConnected(false), mGFXWidth(width + 1), mGFXHeight(height + 1)
 	{
 		//top wall
 		mWalls.push_back(Rectangle(x, y, width, 1));
@@ -87,7 +103,7 @@ public:
 		initGFX();
 	}
 
-	virtual void draw()
+	virtual void draw() const
 	{
 		std::cout << MOVE_TO_0_0;
 	
@@ -102,7 +118,7 @@ public:
 		}
 	}
 
-	void drawgfx()
+	void drawGFX()
 	{
 		int row = 0, col = 0;
 		for(row = 0; row < mGFXHeight; ++row){
@@ -113,8 +129,22 @@ public:
         }
 	}
 
+	void setGFX(char c, int x, int y)
+	{
+		mGFX[x][y] = c;
+	}	
+
 	template <typename T>
 	Vector2D<T> getRandomWall();
+
+	virtual ~Room()
+	{	
+		for(int i = 0; i < mGFXHeight; ++i){
+            delete []mGFX[i];
+        }
+	
+		delete []mGFX;
+	}
 };
 
 template <typename T>

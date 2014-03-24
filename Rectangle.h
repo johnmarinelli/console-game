@@ -1,6 +1,8 @@
 #ifndef RECTANGLE_H
 #define RECTANGLE_H
 
+#include "Globals.h"
+
 class Rectangle
 {
 public:
@@ -16,7 +18,7 @@ public:
 	}
 };
 
-void drawRect(const Rectangle& rect, const char gfx)
+void drawRect(const Rectangle& rect, const char gfx) 
 {
    int i = 0, j = 0;
 

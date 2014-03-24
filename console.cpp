@@ -9,21 +9,16 @@
 #include "Wall.h"
 #include "Enemy.h"
 
+#include "map-gen/Map.h"
+
 int iscollision = 0;
 
-void drawMap()
+void drawMap(Map& map)
 {
 	std::cout << CLEAR_SCREEN;
 	std::cout << MOVE_TO_0_0;
-	int rows = HEIGHT;
-	int cols = WIDTH;
 
-	for(int i = 0; i < rows; ++i){
-		for(int j = 0; j < cols; ++j){
-			printf(".");	
-		}
-		printf("\n");
-	}
+	map.draw();	
 }
 
 void drawGUIBorder()
@@ -74,11 +69,14 @@ int main()
 	em.add(&wall);
 	em.add(&enemy);
 
-	drawMap();
-	drawGUIBorder();
-	drawGUI();
-	em.paint();
+	player.setRect(10, 10, 1, 1);
 
+	//drawGUIBorder();
+	//drawGUI();
+	//em.paint();
+
+	Map map;
+	std::cout << "Press any key to start" << std::endl;
 	moveToInputArea();
 
 	while(input != 'q'){
@@ -90,10 +88,11 @@ int main()
 		cs.update(iscollision);
 		em.update();
 
-		drawMap();
+		drawMap(map);
 		em.paint();
+		/*em.paint();
 		drawGUIBorder();	
-		drawGUI();
+		drawGUI();*/
 		writeOutput();
 
 		moveToInputArea();

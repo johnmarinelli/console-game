@@ -55,7 +55,8 @@ public:
 		for(auto& hall : mHallways){ hall.drawGFX(); }
 	}
 
-	void toFile(std::ofstream& outfile)
+
+	void infoToFile(std::ofstream& outfile)
 	{
 		for(auto& room : mRooms){
 			outfile << "Room\n";
@@ -76,6 +77,44 @@ public:
 			outfile << "height: " << hall.mRect.mHeight << "\n";
 			outfile << "}\n\n";
 		}
+	}
+
+	void gfxToFile(std::ofstream& outfile)
+	{
+		std::cout << CLEAR_SCREEN;
+		//total width of map, total possible height of map
+		int width = mRooms[3].mRect.mX + mRooms[3].mRect.mWidth;
+		int height = HEIGHT + MAX_ROOM_HEIGHT;
+
+		//output itr for char by char output
+		Rectangle itr(1, 1, 1, 1);
+
+		for(int i = 0; i < height; i++)
+		{
+			itr.mY = i;
+
+			for(int j = 0; j < width; j++)
+			{
+				itr.mX = j;
+				char out = ' ';
+				//if our itr makes contact with a room, change char from whitespace
+				for(auto& room : mRooms){
+					if(checkCollision(itr, room.mRect)){
+						out = room.getGFX(itr.mX, itr.mY);
+					}
+				} //rooms
+
+				for(auto& hall : mHallways){
+					if(checkCollision(itr, hall.mRect)){
+						out = hall.getGFX(itr.mX, itr.mY);
+					}
+				} //halls
+
+				outfile << out;
+			} // cols
+
+			outfile << "\n";
+		} //rows
 	}
 };
 

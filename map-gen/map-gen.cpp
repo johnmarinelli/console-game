@@ -3,12 +3,13 @@
 int main(int argc, char* args[])
 {
 	Map map;
+	std::cout << CLEAR_SCREEN;
 	map.draw();
 
 	std::ofstream outfile("map.txt");
 	
 	if(outfile){
-		map.toFile(outfile);
+		map.gfxToFile(outfile);
 	}
 
 	char c;

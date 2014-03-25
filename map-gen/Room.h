@@ -5,12 +5,13 @@
 #include "Vector2D.h"
 
 #include <vector>
-#include <array>
 #include <random>
+
+#include <cmath>
 
 const int MAX_ROOMS = 4;
 
-const int MIN_ROOM_DIMENSION = 3;
+const int MIN_ROOM_DIMENSION = 4;
 const int MIN_ROOM_HEIGHT = HEIGHT - 3;
 const int MAX_ROOM_WIDTH = WIDTH / (MAX_ROOMS);
 const int MAX_ROOM_HEIGHT = HEIGHT - 1;
@@ -27,11 +28,11 @@ struct Room
 {
 private:
 	char **mGFX;
-	
+
 	void initGFX()
 	{
-		int gfxHeight = mRect.mHeight + 1;
-		int gfxWidth = mRect.mWidth + 1;
+		int gfxHeight = mRect.mHeight;
+		int gfxWidth = mRect.mWidth;
 
 		mGFXHeight = gfxHeight;
 		mGFXWidth = gfxWidth;
@@ -85,8 +86,9 @@ public:
 	/*
 	* right wall will be the last column of the width
 	* bottom wall will be the last row of the height
+	* extends collision rectangle accordingly
 	*/
-	Room(int x, int y, int width, int height) : mRect(x, y, width, height), mIsConnected(false), mGFXWidth(width + 1), mGFXHeight(height + 1)
+	Room(int x, int y, int width, int height) : mRect(x, y, width, height), mIsConnected(false), mGFXWidth(width), mGFXHeight(height)
 	{
 		//top wall
 		mWalls.push_back(Rectangle(x, y, width, 1));
@@ -101,6 +103,7 @@ public:
 		mWalls.push_back(Rectangle(x, y, 1, height));
 
 		initGFX();
+		//extendRect();
 	}
 
 	virtual void draw() const
@@ -129,10 +132,23 @@ public:
         }
 	}
 
-	void setGFX(char c, int x, int y)
+	void setGFX(char c, int y, int x)
 	{
-		mGFX[x][y] = c;
+		mGFX[y][x] = c;
 	}	
+
+	/*
+	* this function is used in Map::toFile, where the input will
+	* be offset by the x and y position of the itr.
+	* so, i subtract accordingly to position @ origin
+	*/
+	const char getGFX(int x, int y) const
+	{
+		int xCoord = x - mRect.mX;
+		int yCoord = y - mRect.mY;
+
+		return mGFX[yCoord][xCoord];
+	}
 
 	template <typename T>
 	Vector2D<T> getRandomWall();

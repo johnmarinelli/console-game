@@ -9,7 +9,7 @@
 #include "Hallway.h"
 #include "CheckCollision.h"
 
-const int HALLWAY_HEIGHT = 3;
+#include <algorithm>
 
 int getRandomNumber(int min, int max)
 {
@@ -46,7 +46,7 @@ Room* checkCollision(const Rectangle& scanner, std::vector<Room>& rooms)
 *	Left-Right connection
 *	Used in: map-gen.cpp::connectRooms()
 */
-Hallway connect(const Room& a, const Room& b)
+Hallway connect(Room& a, Room& b)
 {
 	Rectangle aRect = a.mRect;
 	Rectangle bRect = b.mRect;
@@ -54,7 +54,18 @@ Hallway connect(const Room& a, const Room& b)
 	int dx = bRect.mX - (aRect.mX + aRect.mWidth);
 	int dY = bRect.mY - aRect.mY;
 
-	return Hallway(aRect.mX + aRect.mWidth, getRandomNumber(aRect.mY + HALLWAY_HEIGHT, aRect.mY + aRect.mHeight - HALLWAY_HEIGHT), dx + 1, HALLWAY_HEIGHT);
+	int minPoint = 0, maxPoint = 0;
+
+	minPoint = std::max(aRect.mY, bRect.mY);
+	maxPoint = std::min(aRect.mY + aRect.mHeight, bRect.mY + bRect.mHeight) - HALLWAY_HEIGHT;
+
+	int yCoord = (aRect.mY == bRect.mY ? getRandomNumber(aRect.mY + HALLWAY_HEIGHT+1, aRect.mY + aRect.mHeight - HALLWAY_HEIGHT-1) : getRandomNumber(minPoint, maxPoint));
+
+	//setting GFX relative to mGFX's (0,0) based position
+	a.setGFX(FLOOR_CHAR, (yCoord-aRect.mY)+1, aRect.mWidth-1);
+	b.setGFX(FLOOR_CHAR, (yCoord-bRect.mY)+1, 0);
+
+	return Hallway(aRect.mX + aRect.mWidth, yCoord, dx, HALLWAY_HEIGHT);
 }
 
 

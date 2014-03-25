@@ -8,14 +8,13 @@
 #include "Room.h"
 
 const char HALLWAY_CHAR = '-';
+const int HALLWAY_HEIGHT = 3;
 
 struct Hallway : public Room
 {
 private:
     void destroySideWalls()
     {
-		//look in Room ctor to see which order walls are constructed
-
 		//right wall
         mWalls.erase(mWalls.begin() + 1);
 		//left wall

@@ -3,18 +3,23 @@
 int main(int argc, char* args[])
 {
 	Map map;
-	std::cout << CLEAR_SCREEN;
-	map.draw();
+	map.init();
+
+	std::cout << "Generating map...";
 
 	std::ofstream outfile("map.txt");
+	std::ofstream infofile("mapinfo.txt");
 	
-	if(outfile){
+	if(outfile && infofile){
 		map.gfxToFile(outfile);
+		map.infoToFile(infofile);
+	
+		std::cout << "done.\n";
 	}
 
-	char c;
-	std::cin >> c;
+	else{
+		return 1;
+	}
 
-	std::cout << CLEAR_SCREEN;
 	return 0;
 }

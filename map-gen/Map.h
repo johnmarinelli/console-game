@@ -1,5 +1,6 @@
 #ifndef MAP_H
 #define MAP_H
+
 #include "../Globals.h"
 #include "Utilities.h"
 #include "Room.h"
@@ -28,9 +29,24 @@ private:
 	    }
 	}
 
+protected:
+	std::vector<Room>& getRooms()
+	{
+		return mRooms;
+	}
+	
+	std::vector<Hallway>& getHalls()
+	{
+		return mHallways;
+	}
+	
 public:
 	Map()
 	{
+	}	
+	
+	virtual void init()
+	{	
 		int cellwidth = WIDTH / GRID_WIDTH;
 		int cellheight = HEIGHT / GRID_HEIGHT;
 
@@ -47,17 +63,26 @@ public:
 
     	//create halls from rooms
     	connectRooms();
-	}	
+	}
 
-	void draw() 
+	virtual void draw() 
 	{
-		for(auto& room: mRooms){ room.drawGFX(); }
-		for(auto& hall : mHallways){ hall.drawGFX(); }
+		for(auto& room: mRooms){ 
+			room.drawGFX(); 
+		}
+		
+		for(auto& hall : mHallways){ 
+			hall.drawGFX(); 
+		}
 	}
 
 
 	void infoToFile(std::ofstream& outfile)
 	{
+		//width & height of map
+		outfile << mRooms[3].mRect.mX + mRooms[3].mRect.mWidth << "\n";
+		outfile <<  HEIGHT + MAX_ROOM_HEIGHT << "\n";
+
 		for(auto& room : mRooms){
 			outfile << "Room\n";
 			outfile << "{\n";

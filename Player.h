@@ -20,6 +20,7 @@ private:
 			case DOWN: mRect.mY--; break;
 			case LEFT: mRect.mX++; break;
 			case RIGHT: mRect.mX--; break;
+			case NONE: mRect.mX = 1; mRect.mY = 1; break;
 			default: break;
 		}	
 	}
@@ -64,6 +65,12 @@ public:
 		setType(PLAYER);
 		setRect(1,1,1,1);
 		mStatistics.Health = 10;
+	}
+	
+	//debug
+	void moveback()
+	{
+		moveBack();
 	}
 
 	void handleInput(char input)

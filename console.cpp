@@ -9,11 +9,11 @@
 #include "Wall.h"
 #include "Enemy.h"
 
-#include "map-gen/Map.h"
+#include "LevelMap.h"
 
 int iscollision = 0;
 
-void drawMap(Map& map)
+void drawMap(LevelMap& map)
 {
 	std::cout << CLEAR_SCREEN;
 	std::cout << MOVE_TO_0_0;
@@ -54,7 +54,7 @@ void writeOutput()
 
 int main()
 {
-	std::cout << CLEAR_SCREEN;	
+	//std::cout << CLEAR_SCREEN;	
 	char input = ' ';
 
 	EntityManager em;
@@ -69,13 +69,26 @@ int main()
 	em.add(&wall);
 	em.add(&enemy);
 
-	player.setRect(10, 10, 1, 1);
+	//i know 13, 3 to be valid floor
+	player.setRect(14, 3, 1, 1);
 
-	//drawGUIBorder();
-	//drawGUI();
-	//em.paint();
+	//call map generating program
+	int success = system("./map-gen/mg");
+	
+	/*lol fix this*/
+	while(success == 35584) {
+		success = system("./map-gen/mg");
+//		printf("map gen failed: %d\n", success);
+//		return 0;
+	}
 
-	Map map;
+	LevelMap levelmap;
+	std::ifstream gfx("map-gen/map.txt");
+	std::ifstream info("map-gen/mapinfo.txt");
+	levelmap.init(gfx, info);
+
+	levelmap.draw();
+
 	std::cout << "Press any key to start" << std::endl;
 	moveToInputArea();
 
@@ -85,19 +98,19 @@ int main()
 
 		player.handleInput(input);
 
+		if(!levelmap.isValidMove(player.mRect.mX, player.mRect.mY))	
+			player.moveback();
+
 		cs.update(iscollision);
 		em.update();
 
-		drawMap(map);
+		drawMap(levelmap);
 		em.paint();
-		/*em.paint();
-		drawGUIBorder();	
-		drawGUI();*/
 		writeOutput();
 
 		moveToInputArea();
 	}
-	
+
 	std::cout << MOVE_TO_0_0;
 
 	return 0;

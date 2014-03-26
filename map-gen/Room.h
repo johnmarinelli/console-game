@@ -36,11 +36,9 @@ private:
 
 		mGFXHeight = gfxHeight;
 		mGFXWidth = gfxWidth;
-
-		//+1 because onscreen is index 1 
+ 
 		mGFX = new char*[gfxHeight];
 	
-		//+1 because onscreen is index 1
 		for(int i = 0; i < gfxHeight; ++i){
 			mGFX[i] = new char[gfxWidth];
 		}

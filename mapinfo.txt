@@ -4,55 +4,55 @@ Room
 {
 x: 1
 y: 2
-width: 7
-height: 8
-}
-
-Room
-{
-x: 25
-y: 2
-width: 10
-height: 8
-}
-
-Room
-{
-x: 52
-y: 1
-width: 9
+width: 5
 height: 9
 }
 
 Room
 {
-x: 75
+x: 33
 y: 2
+width: 11
+height: 9
+}
+
+Room
+{
+x: 54
+y: 1
 width: 12
-height: 8
+height: 9
+}
+
+Room
+{
+x: 78
+y: 1
+width: 9
+height: 9
 }
 
 Hall
 {
-x: 8
+x: 6
 y: 6
-width: 17
+width: 27
 height: 3
 }
 
 Hall
 {
-x: 35
-y: 7
-width: 17
+x: 44
+y: 5
+width: 10
 height: 3
 }
 
 Hall
 {
-x: 61
-y: 3
-width: 14
+x: 66
+y: 5
+width: 12
 height: 3
 }
 

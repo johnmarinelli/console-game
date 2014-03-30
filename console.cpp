@@ -69,7 +69,7 @@ int main()
 	em.add(&wall);
 	em.add(&enemy);
 
-	//i know 13, 3 to be valid floor
+	//i know 14, 3 to be valid floor
 	player.setRect(14, 3, 1, 1);
 
 	//call map generating program

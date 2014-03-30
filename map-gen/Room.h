@@ -101,7 +101,23 @@ public:
 		mWalls.push_back(Rectangle(x, y, 1, height));
 
 		initGFX();
-		//extendRect();
+	}
+	
+	Room(const Rectangle& rect) : mRect(rect), mIsConnected(false), mGFXWidth(rect.mWidth), mGFXHeight(rect.mHeight)
+	{
+		//top wall
+		mWalls.push_back(Rectangle(rect.mX, rect.mY, rect.mWidth, 1));
+	
+		//right wall
+		mWalls.push_back(Rectangle(rect.mX + rect.mWidth, rect.mY, 1, rect.mHeight));
+
+		//bottom wall, extended to meet with right wall corner
+		mWalls.push_back(Rectangle(rect.mX, rect.mY + rect.mHeight, rect.mWidth + 1, 1));
+		
+		//left wall
+		mWalls.push_back(Rectangle(rect.mX, rect.mY, 1, rect.mHeight));
+
+		initGFX();
 	}
 
 	virtual void draw() const

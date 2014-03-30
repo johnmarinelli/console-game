@@ -47,6 +47,10 @@ public:
 		destroySideWalls();
 	}
 
+	Hallway(const Rectangle& rect) : Room(rect)
+	{
+	}
+
 	~Hallway()
 	{
 	}

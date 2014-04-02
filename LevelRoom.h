@@ -6,7 +6,7 @@
 #include "Entity.h"
 #include <vector>
 
-class LevelRoom : Room
+class LevelRoom : public Room
 {
 private:
 	std::vector<Entity*> mEntities;
@@ -18,6 +18,11 @@ public:
 	
 	LevelRoom(const Rectangle& rect) : Room(rect)
 	{
+	}
+
+	void add(Entity& e)
+	{
+		mEntities.push_back(&e);
 	}
 };
 

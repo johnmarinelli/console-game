@@ -40,7 +40,7 @@ private:
 		}
 	}
 
-	void collision(int& coll)
+	void collision()
 	{
 		std::vector<Entity*> v;
 
@@ -52,7 +52,6 @@ private:
         	                if(v[j] != mEntities[i]){
         	                        if(checkCollision(*mEntities[i], *v[j])){
 										(*mEntities[i]).handleCollision(*v[j]);
-										coll++;
         	                        }
         	                }
         	        }
@@ -65,10 +64,10 @@ public:
 	{
 	}
 
-	void update(int& coll)
+	void update()
 	{
 		updateQuadTree();
-		collision(coll);
+		collision();
 	}	
 
 };

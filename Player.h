@@ -133,6 +133,6 @@ public:
 		return mStatistics;
 	}
 
-} player;
+};
 
 #endif

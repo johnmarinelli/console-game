@@ -153,6 +153,19 @@ public:
 			}
 		}
 	}
+
+	void insertInto(Entity& e, const int roomNo = -1)
+	{
+		if(roomNo > -1 && roomNo < mLevelRooms.size()){
+			Rectangle rect = mLevelRooms[roomNo]->mRect;
+			int x = getRandomNumber(rect.mX + 1, rect.mX + rect.mWidth - 1);
+			int y = getRandomNumber(rect.mY + 1, rect.mY + rect.mHeight - 1);
+
+			e.setRect(x, y, 1, 1);
+
+			mLevelRooms[roomNo]->add(e);
+		}
+	}
 };
 
 #endif

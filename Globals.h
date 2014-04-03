@@ -6,7 +6,7 @@
 #include <iostream>
 #include <string>
 
-const int WIDTH = 50;
+const int WIDTH = 100;
 const int HEIGHT = 10;
 
 const std::string MOVE_TO_0_0 = "\033[1;1f";

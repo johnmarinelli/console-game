@@ -140,9 +140,13 @@ public:
 		getGFX(gfx);
 	}
 
+	/*
+	* check whether point at mGFX is an invalid tile
+	* y-2 is because there is two rows of difference between player coordinates & mGFX coordinates
+	*/
 	bool isValidMove(int x, int y)
 	{
-		return (mGFX[y-1][x] != WALL_CHAR && mGFX[y-1][x-1] != ' ');
+		return (mGFX[y-2][x] != WALL_CHAR && mGFX[y-2][x] != ' ');
 	}
 	
 	void draw()
@@ -158,8 +162,10 @@ public:
 	{
 		if(roomNo > -1 && roomNo < mLevelRooms.size()){
 			Rectangle rect = mLevelRooms[roomNo]->mRect;
-			int x = getRandomNumber(rect.mX + 1, rect.mX + rect.mWidth - 1);
-			int y = getRandomNumber(rect.mY + 1, rect.mY + rect.mHeight - 1);
+			int x = getRandomNumber(rect.mX + 1, rect.mX + rect.mWidth - 2);
+		
+			//difference of 3 and 2 because on screen coordinates are different
+			int y = getRandomNumber(rect.mY + 3, rect.mY + rect.mHeight - 2);
 
 			e.setRect(x, y, 1, 1);
 

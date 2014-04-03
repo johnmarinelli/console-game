@@ -7,6 +7,11 @@
 
 #include <sstream>
 
+/*
+* 97 is the ascii value for 'a', so we use mGFX - ASCII_DIFFERENCE to determine level
+*/ 
+const int ASCII_DIFFERENCE = 96;
+
 class Enemy : public Entity
 {
 private:
@@ -97,17 +102,37 @@ private:
 
 public:
 	char mGFX;
+	unsigned int mLevel;
 
-	Enemy() : mGFX('a'), mAI(*this), mTarget(nullptr)
+	Enemy() : mGFX('a'), mAI(*this), mTarget(nullptr), mLevel(mGFX - ASCII_DIFFERENCE)
 	{
 		setType(ENEMY);
 		setRect(2,2,2,2);
 	}
 
-	Enemy(Rectangle rect, char level) : mGFX(level), mAI(*this), mTarget(nullptr)
+	Enemy(Rectangle rect, char level) : mGFX(level), mAI(*this), mTarget(nullptr), mLevel(mGFX - ASCII_DIFFERENCE)
 	{
 		setRect(rect.mX, rect.mY, rect.mWidth, rect.mHeight);
 		setType(ENEMY);
+	}
+
+	Enemy(const Enemy& e) : mGFX(e.mGFX), mAI(*this), mTarget(e.mTarget), mLevel(e.mLevel)
+	{
+		setRect(e.mRect);
+		setType(ENEMY);
+	}
+
+	Enemy& operator=(const Enemy& e)
+	{		
+		mGFX = e.mGFX;
+		
+		mTarget = nullptr;
+		mLevel = e.mLevel;
+
+		setRect(e.mRect);
+		setType(ENEMY);
+
+		return *this;
 	}
 
 	void handleCollision(Entity& e)
@@ -142,7 +167,7 @@ public:
 		switch(type)
         {
             case MESSAGETYPE_ATTACK: mStatistics.Health -= sender.getStatistics().Damage;
-									 mAI.setState(AI::AIState::ATTACK);
+									 //mAI.setState(AI::AIState::ATTACK);
 									 mTarget = &sender;
                 break;
             default: 

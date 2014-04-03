@@ -9,63 +9,61 @@
 #include "QuadTree.h"
 #include "EntityManager.h"
 #include "Player.h"
-#include "Wall.h"
 #include "Enemy.h"
+#include "HealthPack.h"
 
 #include "LevelMap.h"
-
-int iscollision = 0;
-
-void drawMap(LevelMap& map)
-{
-    std::cout << CLEAR_SCREEN;
-    std::cout << MOVE_TO_0_0;
-
-    map.draw();
-}
-
-void drawGUIBorder()
-{
-    int borderXMargin = WIDTH + 4;
-    std::cout << MOVE_TO_0_0;
-
-    for(int i = 1; i < HEIGHT + 1; ++i){
-        printf("\033[%d;%df", i, borderXMargin); printf("|");
-    }
-}
-
-void drawGUI()
-{
-    int borderXMargin = WIDTH + 7;
-    std::cout << MOVE_TO_0_0;
-
-    printf("\033[%d;%df", 1, borderXMargin); printf("INVENTORY");
-    printf("\033[%d;%df", 3, borderXMargin); printf("collision: %d", iscollision);
-}
-
-void writeOutput()
-{
-    std::cout << MOVE_TO_0_0;
-
-    moveTo(0, HEIGHT + 1);
-
-    while(!globalOutputs.empty()){
-        std::cout << globalOutputs.front() << std::endl;
-        globalOutputs.pop();
-    }
-}
+#include "Gui.h"
 
 class Game
 {
 private:
+
+	struct Stage
+	{
+		unsigned int Level; 
+		unsigned int Enemies;
+	
+		Stage() : Level(1), Enemies(0)
+		{
+		}
+
+	} mStage;
+	
 	EntityManager mEntityManager;
 	CollisionSystem mCollisionSystem;
 	LevelMap mLevelMap;
 	Player mPlayer;
-	Enemy mEnemy;
+	Gui mGui;
+	HealthPack healthpack;
+	//std::vector<Enemy> mEnemies;
 
+	Enemy mEnemies[10];
 	char mInput;
 	
+	void spawnEnemies()
+	{
+		int minLevel = mStage.Level > 3 ? mStage.Level - 3 : mStage.Level;
+		int maxLevel = mStage.Level;		
+
+		int enemies = mStage.Level > 4 ? mStage.Level : 4;
+
+		for(int i = 0; i < enemies; ++i){
+			int level = getRandomNumber(minLevel, maxLevel) + ASCII_DIFFERENCE;
+
+			int roomNo = i % 4;
+
+			Enemy enemy;
+
+			mEnemies[i] = enemy;
+			mLevelMap.insertInto(mEnemies[i], roomNo);
+			mEntityManager.add(&mEnemies[i]);
+//			mEnemies.push_back(enemy);
+//			mLevelMap.insertInto(mEnemies.back(), roomNo);
+//			mEntityManager.add(&(mEnemies.back()));
+		}
+	}
+
 public:
 	Game() : mInput(' '), mCollisionSystem(mEntityManager)
 	{
@@ -73,12 +71,15 @@ public:
 		std::ifstream info("map-gen/mapinfo.txt");
 	
 		mLevelMap.init(gfx, info);
-		mLevelMap.insertInto(mEnemy, 0);
 
-		mPlayer.setRect(14, 3, 1, 1);
+		mPlayer.setRect(14, 4, 1, 1);
+
+		mLevelMap.insertInto(healthpack, 0);
 
 		mEntityManager.add(&mPlayer);
-		mEntityManager.add(&mEnemy);
+		mEntityManager.add(&healthpack);
+
+		spawnEnemies();
 	}
 
 	void update()
@@ -96,14 +97,13 @@ public:
 			mCollisionSystem.update();
 			mEntityManager.update();
 
-			drawMap(mLevelMap);
+			mGui.drawMap(mLevelMap);
 			mEntityManager.paint();
-			writeOutput();
+			mGui.writeOutput(mPlayer.getStatistics(), mPlayer);
 		
 			moveToInputArea();
 		}
 	}
-
 };
 
 #endif

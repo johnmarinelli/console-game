@@ -10,12 +10,14 @@ enum EntityType
 	PLAYER,
 	WALL,
 	ENEMY,
+	HEALTHPACK,
 };
 
 enum MessageType
 {
 	MESSAGETYPE_NONE,
 	MESSAGETYPE_ATTACK,
+	MESSAGETYPE_GETHEALTH,
 };
 
 class Entity
@@ -41,6 +43,11 @@ public:
 		mRect.mY = y;	
 		mRect.mWidth = width;	
 		mRect.mHeight = height;
+	}
+
+	void setRect(Rectangle rect)
+	{
+		mRect = rect;
 	}
 
 	virtual void handleCollision(Entity& e)

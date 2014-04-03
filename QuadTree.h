@@ -88,6 +88,10 @@ public:
 	{	
 		mObjects.reserve(5);
 		mNodes.reserve(4);
+	
+		for(int i = 0; i != 4; ++i){
+			mNodes[i]  = nullptr;
+		}
 	}
 
 	void getObjects(std::vector<Entity*>& rtnObjs, const Rectangle& rect)
@@ -110,7 +114,6 @@ public:
 		for(int i = 0; i < MAX_DIVISIONS; i++){
 			if(mNodes[i] != NULL){
 				mNodes[i]->clear();
-				mNodes[i] = nullptr;
 			}
 		}
 	}	
@@ -126,8 +129,8 @@ public:
 			if(index != -1){
 				mNodes[index]->insert(obj);
 			}
-		
-			return;
+			
+			//return;
 		}
 
 		mObjects.push_back(obj);

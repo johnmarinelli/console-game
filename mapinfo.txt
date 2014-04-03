@@ -1,58 +1,58 @@
-93
+189
 19
 Room
 {
-x: 12
-y: 1
-width: 12
+x: 19
+y: 2
+width: 22
 height: 8
 }
 
 Room
 {
-x: 31
+x: 51
 y: 2
-width: 8
+width: 9
 height: 9
 }
 
 Room
 {
-x: 50
+x: 109
 y: 1
-width: 6
+width: 8
 height: 8
 }
 
 Room
 {
-x: 84
+x: 170
 y: 1
-width: 9
-height: 8
+width: 19
+height: 9
 }
 
 Hall
 {
-x: 24
-y: 2
-width: 7
+x: 41
+y: 6
+width: 10
 height: 3
 }
 
 Hall
 {
-x: 39
-y: 3
-width: 11
+x: 60
+y: 4
+width: 49
 height: 3
 }
 
 Hall
 {
-x: 56
+x: 117
 y: 5
-width: 28
+width: 53
 height: 3
 }
 

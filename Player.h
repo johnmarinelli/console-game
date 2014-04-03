@@ -27,34 +27,34 @@ private:
 
 	void moveRight()
 	{
-		if(mRect.mX < WIDTH){
+		//if(mRect.mX < WIDTH){
 			mRect.mX++;
 			mLastMove = RIGHT;
-		}
+		//}
 	}
 	
 	void moveLeft()
 	{
-		if(mRect.mX > 1){
+		//if(mRect.mX > 1){
 			mRect.mX--;
 			mLastMove = LEFT;
-		}
+		//}
 	}
 
 	void moveUp()
 	{
-		if(mRect.mY > 1){
+		//if(mRect.mY > 1){
 			mRect.mY--;
 			mLastMove = UP;
-		}
+		//}
 	}
 
 	void moveDown()
 	{
-		if(mRect.mY < HEIGHT){
+		//if(mRect.mY < HEIGHT){
 			mRect.mY++;
 			mLastMove = DOWN;
-		}
+		//}
 	}
 
 public:
@@ -95,6 +95,10 @@ public:
 			attack(e);
 			moveBack();
 		}
+	
+		else if(e.mType == HEALTHPACK){
+				
+		}
 	}
 
 	void paint()	
@@ -109,6 +113,15 @@ public:
 
 		std::stringstream ss;
 		ss << "Player attacks " << e.mGFX << " for " << mStatistics.Damage;
+		globalOutputs.push(ss.str());
+	}
+	
+	void getHealth(Entity& e)
+	{
+		e.receiveMessage(MESSAGETYPE_GETHEALTH, *this);
+
+		std::stringstream ss;
+		ss << "Player picks up some health.";
 		globalOutputs.push(ss.str());
 	}
 

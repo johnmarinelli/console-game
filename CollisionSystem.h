@@ -5,6 +5,8 @@
 #include "Globals.h"
 #include "QuadTree.h"
 
+#include "LevelMap.h"
+
 class CollisionSystem
 {
 private:
@@ -44,18 +46,18 @@ private:
 	{
 		std::vector<Entity*> v;
 
- 	      	for(int i = 0; i < mEntities.size(); i++){
-        	        v.clear();
-        	        mQuadTree.getObjects(v, mEntities[i]->mRect);
+ 	    for(int i = 0; i < mEntities.size(); i++){
+        	v.clear();
+        	mQuadTree.getObjects(v, mEntities[i]->mRect);
 	
-	                for(int j = 0; j < v.size(); j++){
-        	                if(v[j] != mEntities[i]){
-        	                        if(checkCollision(*mEntities[i], *v[j])){
-										(*mEntities[i]).handleCollision(*v[j]);
-        	                        }
-        	                }
-        	        }
+	    	for(int j = 0; j < v.size(); j++){
+        		if(v[j] != mEntities[i]){
+        			if(checkCollision(*mEntities[i], *v[j])){
+						(*mEntities[i]).handleCollision(*v[j]);
+        			}
+        		}
         	}
+        }
 	}
 
 public:
@@ -64,10 +66,16 @@ public:
 	{
 	}
 
-	void update()
+	void update(const LevelMap& levelmap)
 	{
 		updateQuadTree();
 		collision();
+
+		for(auto i : mEntities){
+			if(!levelmap.isValidMove(i->mRect.mX, i->mRect.mY)){
+				i->moveBack();
+			}
+		}
 	}	
 
 };

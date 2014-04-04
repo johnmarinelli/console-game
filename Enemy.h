@@ -16,6 +16,20 @@ class Enemy : public Entity
 {
 private:
 	Statistics mStatistics;
+	
+	bool inRange(Rectangle& rect)
+	{
+		int distanceX = std::abs(rect.mX - mRect.mX);
+		int distanceY = std::abs(rect.mY - mRect.mY);
+		
+		if(distanceX < 1 && distanceY < 2){
+			return true;
+		}
+
+		else{
+			return false;
+		}
+	}
 
 	class AI
 	{
@@ -27,42 +41,25 @@ private:
 		{
 			Rectangle& rect = mBody.mRect;
 			
-			if(rect.mX > target.mX){
+			if(rect.mX > target.mX+1){
 				rect.mX--;
 				mLastMove = LEFT;
 			}
-			else if(rect.mX < target.mX){
+			else if(rect.mX < target.mX-1){
 				rect.mX++;
 				mLastMove = RIGHT;
 			}
 			
-			if(rect.mY > target.mY){
+			else if(rect.mY > target.mY+1){
 				rect.mY--;
 				mLastMove = UP;
 			}
-			else if(rect.mY < target.mY){
+			else if(rect.mY < target.mY-1){
 				rect.mY++;	
 				mLastMove = DOWN;
 			}
 		}
 
-		void moveBack()
-		{
-			Rectangle& rect = mBody.mRect;
-			switch(mLastMove)
-			{
-				case UP: rect.mY++;
-					break;
-				case DOWN: rect.mY--;
-					break;
-				case LEFT: rect.mX++;
-					break;
-				case RIGHT: rect.mX--;
-					break;
-				default: break;
-			}
-		}
-		
 	public:
 		friend class Enemy;
 	
@@ -92,10 +89,26 @@ private:
 					break;
 				case ATTACK: moveToward(mBody.mTarget->mRect);
 							 mBody.attack(*(mBody.mTarget));
-							 moveBack();
 					break;
 			}
 		}
+
+		void moveBack()
+		{
+			Rectangle& rect = mBody.mRect;
+			switch(mLastMove)
+			{
+				case UP: rect.mY++;
+					break;
+				case DOWN: rect.mY--;
+					break;
+				case LEFT: rect.mX++;
+					break;
+				case RIGHT: rect.mX--;
+					break;
+				default: break;
+			}
+		}	
 	} mAI;
 
 	Entity* mTarget;
@@ -146,6 +159,11 @@ public:
 	{
 		mAI.update();
 	}
+
+	void moveBack()
+	{
+		mAI.moveBack();
+	}
 	
 	void paint()
 	{
@@ -155,7 +173,9 @@ public:
 
 	void attack(Entity& e)
 	{	
-		e.receiveMessage(MESSAGETYPE_ATTACK, mStatistics);
+		if(inRange(e.mRect)){
+			e.receiveMessage(MESSAGETYPE_ATTACK, mStatistics);
+		}
 
 		std::stringstream ss;
 		ss << mGFX << " hits Player for " << mStatistics.Damage;
@@ -167,7 +187,7 @@ public:
 		switch(type)
         {
             case MESSAGETYPE_ATTACK: mStatistics.Health -= sender.getStatistics().Damage;
-									 //mAI.setState(AI::AIState::ATTACK);
+									 mAI.setState(AI::AIState::ATTACK);
 									 mTarget = &sender;
                 break;
             default: 

@@ -56,7 +56,7 @@ public:
 
 	/*
 	* params: type, entity
-	* messagetypes: 
+	* messagetypes: GETHEALTH,
 	*/
 	virtual void receiveMessage(MessageType type, Entity& sender)
 	{
@@ -72,6 +72,10 @@ public:
 
 	virtual void update()
 	{	
+	}
+	
+	virtual void moveBack()
+	{
 	}
 
 	virtual bool isActive()

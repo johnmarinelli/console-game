@@ -2,23 +2,27 @@
 #define HEALTHPACK_H
 
 #include "Entity.h"
+#include "Statistics.h"
 
 class HealthPack : public Entity
 {
 private:
-	unsigned int mHealth;
-
 	void giveHealth(Statistics& stats)
 	{
-		stats.Health += mHealth;
-	
-		mHealth = 0;
+		stats.Health += mStatistics.Health;
+
+		std::stringstream ss;
+        ss << "Player picks up some health.";
+        globalOutputs.push(ss.str());
+
+		mStatistics.Health = 0;
 	}
 
 public:
 	char mGFX;
+	Statistics mStatistics;
 
-	HealthPack() : mHealth(1), mGFX('@')
+	HealthPack() : mGFX('@'), mStatistics(1, 0, 0)
 	{
 	}
 
@@ -38,7 +42,7 @@ public:
 	
 	bool isActive()
 	{
-		return (mHealth > 0);
+		return (mStatistics.Health > 0);
 	}
 
 	void paint()

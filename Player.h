@@ -94,11 +94,7 @@ public:
 		else if(e.mType == ENEMY){
 			attack(e);
 			moveBack();
-		}
-	
-		else if(e.mType == HEALTHPACK){
-				
-		}
+		}	
 	}
 
 	void paint()	
@@ -115,15 +111,6 @@ public:
 		ss << "Player attacks " << e.mGFX << " for " << mStatistics.Damage;
 		globalOutputs.push(ss.str());
 	}
-	
-	void getHealth(Entity& e)
-	{
-		e.receiveMessage(MESSAGETYPE_GETHEALTH, *this);
-
-		std::stringstream ss;
-		ss << "Player picks up some health.";
-		globalOutputs.push(ss.str());
-	}
 
 	void receiveMessage(MessageType type, const Statistics& stats)
 	{
@@ -131,6 +118,7 @@ public:
 		{	
 			case MESSAGETYPE_ATTACK: mStatistics.Health -= stats.Damage;
 				break;
+			case MESSAGETYPE_GETHEALTH: mStatistics.Health += stats.Health;
 			default:
 				break;
 		}	

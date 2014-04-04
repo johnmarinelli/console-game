@@ -20,6 +20,10 @@ struct Statistics
 	Statistics() : Health(4), Damage(1), Experience(0)
 	{
 	}
+	
+	Statistics(int health, int damage, int exp) : Health(health), Damage(damage), Experience(exp)
+	{
+	}
 };
 
 #endif

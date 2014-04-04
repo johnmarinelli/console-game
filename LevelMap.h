@@ -144,7 +144,7 @@ public:
 	* check whether point at mGFX is an invalid tile
 	* y-2 is because there is two rows of difference between player coordinates & mGFX coordinates
 	*/
-	bool isValidMove(int x, int y)
+	const bool isValidMove(int x, int y) const
 	{
 		return (mGFX[y-2][x] != WALL_CHAR && mGFX[y-2][x] != ' ');
 	}
@@ -172,6 +172,12 @@ public:
 			mLevelRooms[roomNo]->add(e);
 		}
 	}
+	/*
+	void reset()
+	{
+		mRooms.erase(std::remove(mRooms.begin(), mRooms.end()));
+		mHallways.erase(std::remove(mRooms.begin(), mRooms.end()));
+	}*/
 };
 
 #endif

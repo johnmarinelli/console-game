@@ -13,6 +13,7 @@
 #include "HealthPack.h"
 
 #include "LevelMap.h"
+#include "Stairs.h"
 #include "Gui.h"
 
 class Game
@@ -23,6 +24,8 @@ private:
 	{
 		unsigned int Level; 
 		unsigned int Enemies;
+	
+		Stairs DownStairs;
 	
 		Stage() : Level(1), Enemies(0)
 		{
@@ -78,6 +81,10 @@ public:
 
 		mEntityManager.add(&mPlayer);
 		mEntityManager.add(&healthpack);
+		
+		mLevelMap.insertInto(mStage.DownStairs, 3);
+	
+		mEntityManager.add(&(mStage.DownStairs));
 
 		spawnEnemies();
 	}
@@ -90,11 +97,7 @@ public:
 
 			mPlayer.handleInput(mInput);
 
-			if(!mLevelMap.isValidMove(mPlayer.mRect.mX, mPlayer.mRect.mY)){
-				mPlayer.moveback();
-			}
-		
-			mCollisionSystem.update();
+			mCollisionSystem.update(mLevelMap);
 			mEntityManager.update();
 
 			mGui.drawMap(mLevelMap);

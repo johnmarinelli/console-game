@@ -12,7 +12,7 @@ struct Stairs : public Entity
 	{
 	}
 
-	Stairs(Rectangle rect) mDown(false),  mGFX('v')
+	Stairs(Rectangle rect) : mDown(false),  mGFX('v')
 	{
 		setRect(rect);
 	}

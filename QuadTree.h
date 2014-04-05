@@ -35,11 +35,8 @@ private:
 		int y = mBounds.mY;
 
 		mNodes.push_back(new QuadTree(mLevel + 1, Rectangle(x + subnodeWidth, y, subnodeWidth, subnodeHeight)));
-
 		mNodes.push_back(new QuadTree(mLevel + 1, Rectangle(x, y, subnodeWidth, subnodeHeight)));
-
-		mNodes.push_back(new QuadTree(mLevel + 1, Rectangle(x, y + subnodeHeight, subnodeWidth, subnodeHeight)));
-		
+		mNodes.push_back(new QuadTree(mLevel + 1, Rectangle(x, y + subnodeHeight, subnodeWidth, subnodeHeight)));		
 		mNodes.push_back(new QuadTree(mLevel + 1, Rectangle(x + subnodeWidth, y + subnodeHeight, subnodeWidth, subnodeHeight)));
 	}
 
@@ -164,6 +161,27 @@ public:
 		std::cout << "objects " << mObjects.size();
 	}
 
+	void reset()
+	{
+		if(mLevel == 0){
+			clear();
+		}
+	
+		if(mLevel != MAX_LEVELS){
+			for(auto n : mNodes){
+				n->reset();
+			}
+		}
+	
+		for(auto n : mNodes){
+			delete n;
+			n = nullptr;
+		}
+
+		mNodes.erase(std::remove_if(std::begin(mNodes),
+								  std::end(mNodes),
+								  [](QuadTree* node){ return true; }), mNodes.end());
+	}
 };
 
 #endif

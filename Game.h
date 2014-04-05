@@ -39,7 +39,7 @@ private:
 	Player mPlayer;
 	Gui mGui;
 	HealthPack healthpack;
-	//std::vector<Enemy> mEnemies;
+//	std::vector<Enemy> mEnemies;
 
 	Enemy mEnemies[10];
 	char mInput;
@@ -61,9 +61,11 @@ private:
 			mEnemies[i] = enemy;
 			mLevelMap.insertInto(mEnemies[i], roomNo);
 			mEntityManager.add(&mEnemies[i]);
-//			mEnemies.push_back(enemy);
-//			mLevelMap.insertInto(mEnemies.back(), roomNo);
-//			mEntityManager.add(&(mEnemies.back()));
+			//mEnemies.push_back(enemy);
+
+			//Enemy* e(&mEnemies.back());
+			//mLevelMap.insertInto(mEnemies.back(), roomNo);
+			//mEntityManager.add(e);
 		}
 	}
 
@@ -92,6 +94,10 @@ public:
 	void update()
 	{
 		while(mInput != 'q'){
+			if(mPlayer.getStatistics().Health < 9){
+				reset();
+			}	
+	
 			std::cin >> mInput;
 			std::cout << CLEAR_LINE;
 
@@ -103,9 +109,34 @@ public:
 			mGui.drawMap(mLevelMap);
 			mEntityManager.paint();
 			mGui.writeOutput(mPlayer.getStatistics(), mPlayer);
-		
+			
 			moveToInputArea();
 		}
+	}
+
+	void reset()
+	{
+		mEntityManager.reset();
+		mCollisionSystem.reset();
+		mLevelMap.reset();
+		
+		std::ifstream gfx("map-gen/map.txt");
+		std::ifstream info("map-gen/mapinfo.txt");
+	
+		mLevelMap.init(gfx, info);
+
+		mPlayer.setRect(14, 4, 1, 1);
+
+		mLevelMap.insertInto(healthpack, 0);
+
+		mEntityManager.add(&mPlayer);
+		mEntityManager.add(&healthpack);
+		
+		mLevelMap.insertInto(mStage.DownStairs, 3);
+	
+		mEntityManager.add(&(mStage.DownStairs));
+
+		spawnEnemies();
 	}
 };
 

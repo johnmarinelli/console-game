@@ -22,7 +22,7 @@ private:
 		int distanceX = std::abs(rect.mX - mRect.mX);
 		int distanceY = std::abs(rect.mY - mRect.mY);
 		
-		if(distanceX < 1 && distanceY < 2){
+		if(distanceX < 2 && distanceY < 2){
 			return true;
 		}
 
@@ -175,11 +175,11 @@ public:
 	{	
 		if(inRange(e.mRect)){
 			e.receiveMessage(MESSAGETYPE_ATTACK, mStatistics);
-		}
 
-		std::stringstream ss;
-		ss << mGFX << " hits Player for " << mStatistics.Damage;
-		globalOutputs.push(ss.str());
+			std::stringstream ss;
+			ss << mGFX << " hits Player for " << mStatistics.Damage;
+			globalOutputs.push(ss.str());
+		}
 	}
 
 	void receiveMessage(MessageType type, Entity& sender)

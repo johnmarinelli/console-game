@@ -51,6 +51,16 @@ public:
 		else
 			return nullptr;
 	}
+	
+	/*
+	*  All elements of mEntities are made on the stack, so we don't delete
+	*/
+	void reset()
+	{
+		mEntities.erase(std::remove_if(mEntities.begin(), 
+									mEntities.end(), 
+									[](Entity* e){ return true; }), mEntities.end());
+	}
 };
 
 #endif

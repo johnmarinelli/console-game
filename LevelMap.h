@@ -172,12 +172,27 @@ public:
 			mLevelRooms[roomNo]->add(e);
 		}
 	}
-	/*
+	
 	void reset()
 	{
-		mRooms.erase(std::remove(mRooms.begin(), mRooms.end()));
-		mHallways.erase(std::remove(mRooms.begin(), mRooms.end()));
-	}*/
+		for(auto r : mLevelRooms){
+			delete r;
+			r = nullptr;
+		}
+
+		mLevelRooms.erase(std::remove_if(mLevelRooms.begin(), 
+								 mLevelRooms.end(),
+								 [](LevelRoom* room){ return true; }), mLevelRooms.end());
+
+		for(auto h : mLevelHallways){
+			delete h;
+			h = nullptr;
+		}
+		
+		mLevelHallways.erase(std::remove_if(mLevelHallways.begin(), 
+								 mLevelHallways.end(),
+								 [](LevelHallway* hall){ return true; }), mLevelHallways.end());
+	}
 };
 
 #endif

@@ -78,6 +78,10 @@ public:
 		}
 	}	
 
+	void reset()
+	{
+		mQuadTree.reset();
+	}
 };
 
 #endif

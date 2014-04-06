@@ -109,7 +109,7 @@ public:
 		
 		//recursively clear child nodes
 		for(int i = 0; i < MAX_DIVISIONS; i++){
-			if(mNodes[i] != NULL){
+			if(mNodes[i] != nullptr){
 				mNodes[i]->clear();
 			}
 		}
@@ -163,24 +163,19 @@ public:
 
 	void reset()
 	{
-		if(mLevel == 0){
-			clear();
-		}
-	
+		clear();
+
 		if(mLevel != MAX_LEVELS){
-			for(auto n : mNodes){
-				n->reset();
+			for(int i = 0; i < 4; i++){
+				if(mNodes[i] != nullptr){
+					mNodes[i]->reset();
+					delete mNodes[i];
+					mNodes[i] = nullptr;
+				}
 			}
 		}
-	
-		for(auto n : mNodes){
-			delete n;
-			n = nullptr;
-		}
 
-		mNodes.erase(std::remove_if(std::begin(mNodes),
-								  std::end(mNodes),
-								  [](QuadTree* node){ return true; }), mNodes.end());
+		mNodes.clear()
 	}
 };
 

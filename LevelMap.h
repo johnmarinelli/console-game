@@ -26,6 +26,10 @@ private:
 		info >> mWidth;
 		info >> mHeight;
 
+		//console output is index 1, not 0
+		mWidth++;
+		mHeight++;
+
 		std::string input;
 		int x = 0, y = 0, width = 0, height = 0;
 		bool isRoom = true;
@@ -105,14 +109,14 @@ private:
 	void getGFX(std::ifstream& gfx)
 	{
 		//txt file is index 1
-		mWidth++;
+		/*mWidth++;
 		mHeight++;
 
 		mGFX = new char*[mHeight];
 
 		for(int i  = 0; i < mHeight; i++){
 			mGFX[i] = new char[mWidth];
-		}
+		}*/
 
 		int rowN = 0, colN = 0;
 		char c;
@@ -129,6 +133,16 @@ private:
 		}
 	}
 
+	void resetGFX()
+	{
+		//we reuse the memory allocated the first time.
+		for(int i = 0; i < mHeight; ++i){
+			for(int j = 0; j < mWidth; ++j){
+				mGFX[i][j] = ' ';
+			}
+		}
+	}
+
 public:
 	LevelMap() : mHeight(0), mWidth(0) 
 	{
@@ -137,6 +151,14 @@ public:
 	void init(std::ifstream& gfx, std::ifstream& info)
 	{
 		getInfo(info);
+
+		//allocate once, reuse object for every level
+		mGFX = new char*[mHeight];
+
+		for(int i  = 0; i < mHeight; i++){
+			mGFX[i] = new char[mWidth];
+		}
+
 		getGFX(gfx);
 	}
 
@@ -175,23 +197,30 @@ public:
 	
 	void reset()
 	{
-		for(auto r : mLevelRooms){
-			delete r;
-			r = nullptr;
-		}
-
-		mLevelRooms.erase(std::remove_if(mLevelRooms.begin(), 
-								 mLevelRooms.end(),
-								 [](LevelRoom* room){ return true; }), mLevelRooms.end());
-
-		for(auto h : mLevelHallways){
-			delete h;
-			h = nullptr;
+		for(auto& room : mLevelRooms){
+			delete room;
+			room = nullptr;
 		}
 		
-		mLevelHallways.erase(std::remove_if(mLevelHallways.begin(), 
-								 mLevelHallways.end(),
-								 [](LevelHallway* hall){ return true; }), mLevelHallways.end());
+		mLevelRooms.clear();
+	
+		for(auto& hall : mLevelHallways){
+			delete hall;
+			hall = nullptr;
+		}
+	
+		mLevelHallways.clear();
+
+		resetGFX();
+	}
+
+	~LevelMap()
+	{
+		for(int i = 0; i < mHeight; i++){
+			delete []mGFX[i];
+		}
+			
+		delete []mGFX;
 	}
 };
 

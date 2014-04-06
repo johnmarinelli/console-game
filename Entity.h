@@ -86,6 +86,10 @@ public:
 	virtual const Statistics& getStatistics()
 	{
 	}
+
+	virtual void reset()
+	{
+	}
 };
 
 #endif

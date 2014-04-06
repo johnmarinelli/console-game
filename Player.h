@@ -68,9 +68,9 @@ public:
 	}
 	
 	//debug
-	void moveback()
+	void addhealth()
 	{
-		moveBack();
+		mStatistics.Health = 10;
 	}
 
 	void handleInput(char input)

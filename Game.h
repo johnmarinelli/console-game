@@ -77,6 +77,9 @@ public:
 	
 		mLevelMap.init(gfx, info);
 
+		gfx.close();
+		info.close();
+
 		mPlayer.setRect(14, 4, 1, 1);
 
 		mLevelMap.insertInto(healthpack, 0);
@@ -125,6 +128,9 @@ public:
 	
 		mLevelMap.init(gfx, info);
 
+		gfx.close();
+		info.close();
+
 		mPlayer.setRect(14, 4, 1, 1);
 
 		mLevelMap.insertInto(healthpack, 0);
@@ -137,6 +143,7 @@ public:
 		mEntityManager.add(&(mStage.DownStairs));
 
 		spawnEnemies();
+		mPlayer.addhealth();
 	}
 };
 

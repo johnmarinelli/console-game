@@ -207,6 +207,17 @@ public:
 
 		return isactive;
 	}
+
+	void reset()
+	{
+		mTarget = nullptr;
+		mAI.setState(AI::AIState::IDLE);
+	}
+
+	~Enemy()
+	{
+		reset();
+	}
 };
 
 #endif

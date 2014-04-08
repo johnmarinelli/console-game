@@ -56,7 +56,7 @@ private:
 
 			int roomNo = i % 4;
 
-			Enemy enemy;
+			Enemy enemy(Rectangle(), level);
 
 			mEnemies[i] = enemy;
 			mLevelMap.insertInto(mEnemies[i], roomNo);
@@ -75,7 +75,7 @@ public:
 		std::ifstream gfx("map-gen/map.txt");
 		std::ifstream info("map-gen/mapinfo.txt");
 	
-		mLevelMap.init(gfx, info);
+		mLevelMap.init(gfx, info, true);
 
 		gfx.close();
 		info.close();
@@ -122,6 +122,8 @@ public:
 		mEntityManager.reset();
 		mCollisionSystem.reset();
 		mLevelMap.reset();
+
+		mStage.Level = mStage.Level > 26 ? mStage.Level : mStage.Level + 1;
 		
 		std::ifstream gfx("map-gen/map.txt");
 		std::ifstream info("map-gen/mapinfo.txt");

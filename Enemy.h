@@ -212,6 +212,8 @@ public:
 	{
 		mTarget = nullptr;
 		mAI.setState(AI::AIState::IDLE);
+	
+		mLevel = 0;
 	}
 
 	~Enemy()

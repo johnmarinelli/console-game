@@ -175,7 +175,7 @@ public:
 			}
 		}
 
-		mNodes.clear()
+		mNodes.clear();
 	}
 };
 

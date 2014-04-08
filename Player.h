@@ -134,6 +134,10 @@ public:
 		return mStatistics;
 	}
 
+	void reset()
+	{
+		
+	}
 };
 
 #endif

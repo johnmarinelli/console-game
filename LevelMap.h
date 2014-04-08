@@ -23,12 +23,14 @@ private:
 
 	void getInfo(std::ifstream& info)
 	{
-		info >> mWidth;
-		info >> mHeight;
+		int lw;
+		int lh;
+		info >> lw;
+		info >> lh;
 
 		//console output is index 1, not 0
-		mWidth++;
-		mHeight++;
+		mWidth += lw;
+		mHeight += lh;
 
 		std::string input;
 		int x = 0, y = 0, width = 0, height = 0;
@@ -109,15 +111,6 @@ private:
 	void getGFX(std::ifstream& gfx)
 	{
 		//txt file is index 1
-		/*mWidth++;
-		mHeight++;
-
-		mGFX = new char*[mHeight];
-
-		for(int i  = 0; i < mHeight; i++){
-			mGFX[i] = new char[mWidth];
-		}*/
-
 		int rowN = 0, colN = 0;
 		char c;
 		
@@ -138,25 +131,27 @@ private:
 		//we reuse the memory allocated the first time.
 		for(int i = 0; i < mHeight; ++i){
 			for(int j = 0; j < mWidth; ++j){
-				mGFX[i][j] = ' ';
+				mGFX[i][j] = (char)NULL;
 			}
 		}
 	}
 
 public:
-	LevelMap() : mHeight(0), mWidth(0) 
-	{
+	LevelMap() : mHeight(1), mWidth(1) 
+	{	
 	}
 	
-	void init(std::ifstream& gfx, std::ifstream& info)
+	void init(std::ifstream& gfx, std::ifstream& info, bool firstTime = false)
 	{
 		getInfo(info);
 
-		//allocate once, reuse object for every level
-		mGFX = new char*[mHeight];
+		if(firstTime){
+			//allocate once, reuse object for every level
+			mGFX = new char*[mHeight];
 
-		for(int i  = 0; i < mHeight; i++){
-			mGFX[i] = new char[mWidth];
+			for(int i  = 0; i < mHeight; i++){
+				mGFX[i] = new char[mWidth];
+			}
 		}
 
 		getGFX(gfx);
@@ -212,6 +207,9 @@ public:
 		mLevelHallways.clear();
 
 		resetGFX();
+
+		mWidth = 1;
+		mHeight = 1;		
 	}
 
 	~LevelMap()

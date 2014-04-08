@@ -29,6 +29,13 @@ private:
 	    }
 	}
 
+	void reset()
+	{
+		mGrid.clear();
+		mRooms.clear();
+		mHallways.clear();
+	}
+
 protected:
 	std::vector<Room>& getRooms()
 	{
@@ -47,6 +54,8 @@ public:
 	
 	virtual void init()
 	{	
+		reset();
+
 		int cellwidth = WIDTH / GRID_WIDTH;
 		int cellheight = HEIGHT / GRID_HEIGHT;
 

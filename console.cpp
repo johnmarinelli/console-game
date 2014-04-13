@@ -1,10 +1,12 @@
 #include "Game.h"
+#include <unistd.h>
 
 int main()
 {
 	//call map generating program
-	int success = system("./map-gen/mg");
-	
+	chdir("map-gen");
+	int success = system("./mg");
+	chdir("../");	
 	/*lol fix this*/
 	while(success == 35584) {
 		success = system("./map-gen/mg");

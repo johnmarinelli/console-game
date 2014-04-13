@@ -16,9 +16,22 @@ int getRandomNumber(int min, int max)
 	std::random_device rd;
 
     std::default_random_engine reng(rd());
-    std::uniform_int_distribution<int> rand(min, max);
+
+	int random = 0;
+	
+	if(min < max){
+    	std::uniform_int_distribution<int> rand(min, max);
+		random = rand(reng);
+	}
+	
+	//sometimes we'll get an instance where the max is less than the min 
+	//in Map::connect
+	else{
+		std::uniform_int_distribution<int> rand(max, min);
+		random = rand(reng);
+	}
     
-	return rand(reng);
+	return random;
 }
 
 bool identity(const Room& a, const Room& b)
@@ -62,8 +75,13 @@ Hallway connect(Room& a, Room& b)
 	int yCoord = (aRect.mY == bRect.mY ? getRandomNumber(aRect.mY + HALLWAY_HEIGHT+1, aRect.mY + aRect.mHeight - HALLWAY_HEIGHT-1) : getRandomNumber(minPoint, maxPoint));
 
 	//setting GFX relative to mGFX's (0,0) based position
-	a.setGFX(FLOOR_CHAR, (yCoord-aRect.mY)+1, aRect.mWidth-1);
-	b.setGFX(FLOOR_CHAR, (yCoord-bRect.mY)+1, 0);
+	if(a.setGFX(FLOOR_CHAR, (yCoord-aRect.mY)+1, aRect.mWidth-1) == false){
+		printf("connectRooms a");
+	}
+		
+	if(b.setGFX(FLOOR_CHAR, (yCoord-bRect.mY)+1, 0) == false){
+		printf("connectRooms b");
+	}
 
 	return Hallway(aRect.mX + aRect.mWidth, yCoord, dx, HALLWAY_HEIGHT);
 }

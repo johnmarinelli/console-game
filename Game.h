@@ -20,6 +20,17 @@ class Game
 {
 private:
 
+	void initMap()
+	{
+		std::ifstream gfx("map-gen/map.txt");
+		std::ifstream info("map-gen/mapinfo.txt");
+	
+		mLevelMap.init(gfx, info, true);
+
+		gfx.close();
+		info.close();
+	}
+
 	struct Stage
 	{
 		unsigned int Level; 
@@ -72,17 +83,12 @@ private:
 public:
 	Game() : mInput(' '), mCollisionSystem(mEntityManager)
 	{
-		std::ifstream gfx("map-gen/map.txt");
-		std::ifstream info("map-gen/mapinfo.txt");
-	
-		mLevelMap.init(gfx, info, true);
-
-		gfx.close();
-		info.close();
+		initMap();
 
 		mPlayer.setRect(14, 4, 1, 1);
 
 		mLevelMap.insertInto(healthpack, 0);
+		mLevelMap.insertInto(mPlayer, 0);
 
 		mEntityManager.add(&mPlayer);
 		mEntityManager.add(&healthpack);

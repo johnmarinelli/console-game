@@ -21,8 +21,7 @@ private:
 
 	void connectRooms()
 	{
-	    for(auto room = mRooms.begin(); room != mRooms.end() - 1; ++room)
-	    {
+	    for(auto room = mRooms.begin(); room != mRooms.end() - 1; ++room){
 	        auto neighbor = room + 1;
 	        mHallways.push_back(connect(*room, *neighbor));
 	        (*room).mIsConnected = true;
@@ -115,7 +114,6 @@ public:
 
 	void gfxToFile(std::ofstream& outfile)
 	{
-		std::cout << CLEAR_SCREEN;
 		//total width of map, total possible height of map
 		int width = mRooms[3].mRect.mX + mRooms[3].mRect.mWidth;
 		int height = HEIGHT + MAX_ROOM_HEIGHT;

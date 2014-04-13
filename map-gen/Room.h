@@ -146,9 +146,13 @@ public:
         }
 	}
 
-	void setGFX(char c, int y, int x)
+	bool setGFX(char c, int y, int x)
 	{
+		if(std::abs(y) > 1000){
+			return false;
+		}
 		mGFX[y][x] = c;
+return true;
 	}	
 
 	/*
@@ -199,6 +203,14 @@ static Room createRandomRoom(const Rectangle& gridCell)
 	std::uniform_int_distribution<int> ry(gridCell.mY, gridCell.mY + 1);
 	int y = ry(reng);
 
+	//this is a bit of a hack; for the fourth room we have to check if it exceeds the
+	//max amt width on (my) terminal, if it does then we just reduce the width of
+    //the fourth room
+	if(x + width > 177){
+		int diff = x+width - 177;
+		width -= diff;
+	}
+	
 	return Room(x, y, width, height);
 }
 

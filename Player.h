@@ -65,13 +65,7 @@ public:
 		setType(PLAYER);
 		setRect(1,1,1,1);
 		mStatistics.Health = 10;
-	}
-	
-	//debug
-	void addhealth()
-	{
-		mStatistics.Health = 10;
-	}
+	}	
 
 	void handleInput(char input)
 	{
@@ -136,7 +130,7 @@ public:
 
 	void reset()
 	{
-		
+		mStatistics.Health = 10;		
 	}
 };
 

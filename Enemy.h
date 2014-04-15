@@ -212,6 +212,7 @@ public:
 	{
 		mTarget = nullptr;
 		mAI.setState(AI::AIState::IDLE);
+		mStatistics.Health = 4;
 	
 		mLevel = 0;
 	}

@@ -6,6 +6,8 @@
 #include <iostream>
 #include <string>
 
+#include <unistd.h>
+
 const int WIDTH = 100;
 const int HEIGHT = 10;
 
@@ -24,6 +26,15 @@ const void moveTo(int x, int y)
 const void moveToInputArea()
 {
 	moveTo(0, HEIGHT + 4);
+}
+
+const bool runMapGenerator()
+{
+	chdir("map-gen");
+	bool success = system("./mg");
+	chdir("../");
+
+	return success;
 }
 
 #endif

@@ -51,6 +51,14 @@ public:
 		else
 			return nullptr;
 	}
+
+	const int enemies()
+	{
+		int nEnemies = std::count_if(mEntities.begin(), 
+									 mEntities.end(), 
+									 [](Entity* e){ return e->mType == ENEMY; });
+		return nEnemies;
+	}
 	
 	/*
 	*  All elements of mEntities are made on the stack, so we don't delete
